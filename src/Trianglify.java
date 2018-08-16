@@ -56,7 +56,8 @@ public class Trianglify implements Function<ImageData, Integer> {
         if (pointInTriangle(modX, modY, 0, triangleHeight, triangleWidth / 2, 0, triangleWidth, triangleHeight) && !(imageData.getX() - modX + triangleWidth / 2 >= imageData.getBufferedImage().getWidth() || imageData.getY() - modY + triangleHeight / 2 >= imageData.getBufferedImage().getHeight()))
             return new RGB(imageData.getBufferedImage().getRGB(imageData.getX() - modX + triangleWidth / 2, imageData.getY() - modY + triangleHeight / 2)).getValue();
         else
-            return imageData.getRgb().getValue();
+            return new RGB(255, 255, 255).getValue();
+            //return imageData.getRgb().getValue();
     }
 
     private boolean pointInTriangle(int pointX, int pointY, int triangleX1, int triangleY1, int triangleX2, int triangleY2, int triangleX3, int triangleY3) {

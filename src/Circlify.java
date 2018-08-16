@@ -56,7 +56,8 @@ public class Circlify implements Function<ImageData, Integer> {
         if (ColorFunctions.pointInCircle(modX, modY, circleRadius) && !(imageData.getX() - modX + circleRadius >= imageData.getBufferedImage().getWidth() || imageData.getY() - modY + circleRadius >= imageData.getBufferedImage().getHeight()))
             return new RGB(imageData.getBufferedImage().getRGB(imageData.getX() - modX + circleRadius, imageData.getY() - modY + circleRadius)).getValue();
         else
-            return imageData.getRgb().getValue();
+            return new RGB(255, 255, 255).getValue();
+            //return imageData.getRgb().getValue();
 
     }
 }

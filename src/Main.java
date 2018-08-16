@@ -14,25 +14,79 @@ public class Main extends JFrame {
         new Main();
     }
 
-    private int width = 500;
-    private int height = 500;
+    private int width = 650;
+    private int height = 350;
 
     private Main() throws IOException {
         super("ImageProcessor");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
-        BufferedImage img = ImageIO.read(new File("wannes.jpg"));
+        BufferedImage img = ImageIO.read(new File("randy.jpg"));
         Image scaledInstance = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         BufferedImage scaledImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = scaledImage.createGraphics();
         g.drawImage(scaledInstance, 0, 0, null);
         g.dispose();
 
-        add(create(scaledImage));
-        add(transition(scaledImage, new Trianglify.TrianglifyTransition(0, 20)));
+        //add(create(scaledImage));
+        add(transition(scaledImage, new Trianglify.TrianglifyTransition(0, 15)));
+        add(transition(scaledImage, new Circlify.CirclifyTransition(0, 10)));
 
-        add(transition(scaledImage, new Circlify.CirclifyTransition(0, 13)));
+        /*add(create(process(scaledImage, data -> {
+            if (data.getX() > 10) {
+                RGB rgbOfOtherPixel = new RGB(data.getBufferedImage().getRGB(data.getX() - 10, data.getY()));
+                return new RGB(Math.abs(rgbOfOtherPixel.getRed() - data.getRgb().getRed()), Math.abs(rgbOfOtherPixel.getGreen() - data.getRgb().getGreen()), Math.abs(rgbOfOtherPixel.getBlue() - data.getRgb().getBlue())).getValue();
+            } else return new RGB(255, 255, 255).getValue();
+        })));
+*/
+  /*      add(create(process(scaledImage, data -> {
+            if (data.getX() > 10) {
+                RGB rgbOfOtherPixel = new RGB(data.getBufferedImage().getRGB(data.getX() - 10, data.getY()));
+                return new RGB(Math.abs(rgbOfOtherPixel.getRed() - data.getRgb().getGreen()), Math.abs(rgbOfOtherPixel.getGreen() - data.getRgb().getBlue()), Math.abs(rgbOfOtherPixel.getBlue() - data.getRgb().getRed())).getValue();
+            } else return new RGB(255, 255, 255).getValue();
+        })));
+*/
+        /*add(create(process(scaledImage, data -> {
+            RGB otherRgb = new RGB(scaledImage.getRGB(data.getBufferedImage().getWidth() - 1 - data.getX(), data.getBufferedImage().getHeight() - 1 - data.getY()));
+            System.out.println(data.getBufferedImage().getHeight() + ", " + data.getY());
+            return otherRgb.getValue();
+        })));*/
+
+        /*add(create(process(scaledImage, data -> {
+            if (data.getX() >= 1) {
+                RGB otherRgb = new RGB(scaledImage.getRGB(data.getX() - 1, data.getY()));
+                System.out.println(data.getBufferedImage().getHeight() + ", " + data.getY());
+                return new RGB(Math.abs(otherRgb.getRed() - data.getRgb().getGreen()), Math.abs(otherRgb.getGreen() - data.getRgb().getBlue()), Math.abs(otherRgb.getBlue() - data.getRgb().getRed())).getValue();
+            } else return new RGB(255, 255, 255).getValue();
+        })));*/
+
+        /*add(create(process(scaledImage, data -> {
+            if (data.getX() >= 20) {
+                RGB otherRgb = new RGB(scaledImage.getRGB(data.getX() - 20, data.getY()));
+                return new RGB(Math.min(otherRgb.getRed(), data.getRgb().getRed()) + Math.abs(otherRgb.getRed() - data.getRgb().getRed()),
+                        Math.min(otherRgb.getGreen(), data.getRgb().getGreen()) + Math.abs(otherRgb.getGreen() - data.getRgb().getGreen()),
+                        Math.min(otherRgb.getBlue(), data.getRgb().getBlue()) + Math.abs(otherRgb.getBlue() - data.getRgb().getBlue())).getValue();
+            } else return new RGB(255, 255, 255).getValue();
+        })));*/
+/*
+        int count2[] = {0};
+        add(create(process(scaledImage, data -> {
+            if (++count2[0] > 255)
+                count2[0] = 0;
+            return new RGB(data.getRgb().getRed() + count2[0], data.getRgb().getGreen() + count2[0], data.getRgb().getBlue() + count2[0]).getValue();
+        })));
+
+        int count[] = {0, 0, 0};
+        add(create(process(scaledImage, data -> {
+            if (++count[0] > 100)
+                count[0] = 0;
+            if (++count[1] > 150)
+                count[1] = 0;
+            if (++count[2] > 200)
+                count[2] = 0;
+            return new RGB(data.getRgb().getRed() + count[0], data.getRgb().getGreen() + count[1], data.getRgb().getBlue() + count[2]).getValue();
+        })));*/
 
         pack();
         setVisible(true);
@@ -50,11 +104,11 @@ public class Main extends JFrame {
                     jLabel.setIcon(imageIcon);
 
                     if (transition.getCurrent() >= transition.getUpper())
-                        Thread.sleep(250);
+                        Thread.sleep(150);
                     else if (transition.getCurrent() <= transition.getLower())
-                        Thread.sleep(250);
+                        Thread.sleep(150);
                     else
-                        Thread.sleep(20);
+                        Thread.sleep(250);
                     pack();
                 }
             } catch (Exception e) {
